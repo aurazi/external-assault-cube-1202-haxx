@@ -1,22 +1,21 @@
-use std::ffi::CStr;
-use std::ffi::CString;
+use std::ffi::{CStr, CString};
 use std::mem;
-use winapi::shared::minwindef::DWORD;
-use winapi::shared::minwindef::FALSE;
-use winapi::shared::minwindef::HMODULE;
-use winapi::shared::ntdef::CHAR;
-use winapi::shared::ntdef::NULL;
-use winapi::um::errhandlingapi::GetLastError;
-use winapi::um::handleapi::CloseHandle;
-use winapi::um::processthreadsapi::OpenProcess;
-use winapi::um::psapi::EnumProcessModules;
-use winapi::um::psapi::GetModuleFileNameExA;
-use winapi::um::psapi::GetModuleInformation;
-use winapi::um::psapi::GetProcessImageFileNameA;
-use winapi::um::psapi::MODULEINFO;
-use winapi::um::winnt::PROCESS_ALL_ACCESS;
-use winapi::um::winuser::FindWindowA;
-use winapi::um::winuser::GetWindowThreadProcessId;
+use winapi::shared::{
+    minwindef::{DWORD, FALSE, HMODULE},
+    ntdef::{CHAR, NULL},
+};
+use winapi::um::{
+    errhandlingapi::GetLastError,
+    handleapi::CloseHandle,
+    processthreadsapi::OpenProcess,
+    psapi::EnumProcessModules,
+    psapi::GetModuleFileNameExA,
+    psapi::GetModuleInformation,
+    psapi::GetProcessImageFileNameA,
+    psapi::MODULEINFO,
+    winnt::PROCESS_ALL_ACCESS,
+    winuser::{FindWindowA, GetWindowThreadProcessId},
+};
 
 fn main() {
     unsafe {
