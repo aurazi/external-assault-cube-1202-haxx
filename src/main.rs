@@ -112,16 +112,17 @@ fn main() {
             let mut health = 0u32;
             let mut ammo = 0u32;
 
-            let mut address_entity_object_addr: usize = 0;
+            let mut address_entity_object_addr: u32 = 0;
             ReadProcessMemory(
                 process_handle,
-                (base_address as usize + 0x10F4F4) as *mut c_void,
+                (base_address as u32 + 0x10F4F4) as *mut c_void,
                 &mut address_entity_object_addr as *mut _ as *mut c_void,
-                mem::size_of::<usize>(),
+                mem::size_of::<u32>(),
                 core::ptr::null_mut(),
             );
             let health_pointer = (address_entity_object_addr + 0xF8) as *mut c_void;
             let ammo_pointer = (address_entity_object_addr + 0x150) as *mut c_void;
+
             ReadProcessMemory(
                 process_handle,
                 health_pointer,
