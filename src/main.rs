@@ -2,6 +2,8 @@ use std::ffi::{CStr, CString};
 use std::io;
 use std::mem;
 use std::str::FromStr;
+use std::thread;
+use std::time;
 use winapi::ctypes::c_void;
 use winapi::shared::{
     minwindef::{DWORD, FALSE, HMODULE},
@@ -137,8 +139,8 @@ fn main() {
                 mem::size_of::<u32>(),
                 core::ptr::null_mut(),
             );
-            println!("Current Health: {}", health);
-            println!("Current Ammo  : {}", ammo);
+            println!("\nCurrent Health: {}", health);
+            println!("Current Ammo  : {}\n", ammo);
 
             println!("Input your desired health: ");
             let desired_health = get_number_input::<u32>();
@@ -160,7 +162,7 @@ fn main() {
                 core::ptr::null_mut(),
             );
 
-            println!("Set desired changes!");
+            println!("Set desired changes!\n");
         } else {
             println!("Failed to find the module");
         }
@@ -168,6 +170,9 @@ fn main() {
         if CloseHandle(process_handle) == 0 {
             panic!("Failed to close handle?!");
         }
+        println!("Closed process handle, exiting.");
+
+        thread::sleep(time::Duration::from_secs(2));
     }
 }
 fn get_number_input<T: FromStr>() -> T {
@@ -176,7 +181,7 @@ fn get_number_input<T: FromStr>() -> T {
         io::stdin().read_line(&mut string).unwrap();
         match string.trim().parse() {
             Ok(number) => return number,
-            Err(_) => (),
+            Err(_) => println!("Please input a valid u32 data type!"),
         }
         string.clear();
     }
